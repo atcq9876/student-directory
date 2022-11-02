@@ -1,35 +1,37 @@
+@students = [] # an empty array accessible to all methods
+
 def interactive_menu
-  students = []
   loop do
     # 1. print the menu and ask the user what to do
-    puts "Please type a number from 1 to 9 to select an option from the choices below:"
-    puts "1. Input the students"
-    puts "2. Show the students"
-    puts "9. Exit"
-    # 2. read the input and save it into a variable
-    selection = gets.chomp
-    # 3. do what the user has asked
-    case selection
+    print_menu
+    # 2. take input and carry out selected option
+    process(gets.chomp)
+  end
+end
+
+def print_menu
+  puts "Please type a number from 1 to 9 to select an option from the choices below:"
+  puts "1. Input the students"
+  puts "2. Show the students"
+  puts "9. Exit"
+end
+
+def process(selection)
+  case selection
     when "1"
-      students = input_students
+      input_students
     when "2"
-      if !students.empty?
-        print_header
-        print(students)
-        print_footer(students)
-      end
+      show_students
     when "9"
-      exit #this will cause the program to terminate
+      exit # this will cause the program to terminate
     else
       puts "I don't know what you meant, try again"
-    end
   end
 end
 
 def input_students
   puts "Please enter the names, heights and cohorts of the students"
   puts "To finish, just hit return twice"
-  students = []
   # get the first name
   puts "Enter name: "
   name = gets.chomp
@@ -41,22 +43,22 @@ def input_students
   i = 0
   while !name.empty? do
     # add the student hash to the array
-    students << {name: name, height: height, cohort: cohort}
+    @students << {name: name, height: height, cohort: cohort}
     if cohort.empty?
-      students[i][:cohort] = :November
+      @students[i][:cohort] = :November
     end
     puts "Did you misspell the name? Yes/no"
     typo = gets.chomp.downcase
     if typo == "yes"
       puts "Please retype the name: "
-      students[i][:name] = gets.chomp.to_sym
+      @students[i][:name] = gets.chomp.to_sym
     else
-      students[i][:name] = students[i][:name].to_sym
+      @students[i][:name] = @students[i][:name].to_sym
     end
-    if students.count == 1
-      puts "Now we have #{students.count} student"
+    if @students.count == 1
+      puts "Now we have #{@students.count} student"
     else
-      puts "Now we have #{students.count} students"
+      puts "Now we have #{@students.count} students"
     end
     # get another name from the user
     puts "Enter name: "
@@ -69,8 +71,16 @@ def input_students
     end
     i += 1
   end
-  # return the array of students
-  students
+end
+
+def show_students
+  if !@students.empty?
+    print_header
+    print_students_list
+    print_footer
+  else
+    puts "There are currently 0 students"
+  end
 end
 
 def print_header
@@ -78,11 +88,11 @@ def print_header
   puts "-------------"
 end
 
-def print(students)
+def print_students_list
   october = []
   november = []
   december = []
-  students.each do |student|
+  @students.each do |student|
     if student[:cohort] == :October
       october.push(student)
     elsif student[:cohort] == :November
@@ -114,8 +124,8 @@ def print(students)
   end
 end
 
-def print_footer(students)
-  puts "Overall, we have #{students.count} great students"
+def print_footer
+  puts "Overall, we have #{@students.count} great students"
 end
 
 interactive_menu
