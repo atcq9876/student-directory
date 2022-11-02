@@ -1,7 +1,34 @@
+def interactive_menu
+  students = []
+  loop do
+    # 1. print the menu and ask the user what to do
+    puts "Please type a number from 1 to 9 to select an option from the choices below:"
+    puts "1. Input the students"
+    puts "2. Show the students"
+    puts "9. Exit"
+    # 2. read the input and save it into a variable
+    selection = gets.chomp
+    # 3. do what the user has asked
+    case selection
+    when "1"
+      students = input_students
+    when "2"
+      if !students.empty?
+        print_header
+        print(students)
+        print_footer(students)
+      end
+    when "9"
+      exit #this will cause the program to terminate
+    else
+      puts "I don't know what you meant, try again"
+    end
+  end
+end
+
 def input_students
   puts "Please enter the names, heights and cohorts of the students"
   puts "To finish, just hit return twice"
-  # create an empty array
   students = []
   # get the first name
   puts "Enter name: "
@@ -85,23 +112,10 @@ def print(students)
       puts "#{student[:name]}, #{student[:height]}cm"
     end
   end
-
-
-# no longer needed (while loop for printing all students)
-#  i = 0
-#  while i < students.size do
-#    puts "#{students[i][:name]}, #{students[i][:height]}cm, (#{students[i][:cohort]} cohort)".center(40)
-#    i += 1
-#  end
 end
 
 def print_footer(students)
   puts "Overall, we have #{students.count} great students"
 end
 
-students = input_students
-if !students.empty?
-  print_header
-  print(students)
-  print_footer(students)
-end
+interactive_menu
