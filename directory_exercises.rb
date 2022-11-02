@@ -4,11 +4,12 @@ def input_students
   # create an empty array
   students = []
   # get the first name
-  puts "Name: "
-  name = gets.chomp
-  puts "Height: "
-  height = gets.chomp.to_sym
-  puts "Cohort: "
+  puts "Enter name: "
+  name = gets.delete "\n"
+  puts "Enter height in cm: "
+  height = gets.delete "\n"
+  height = height.to_sym
+  puts "Enter cohort: "
   cohort = gets.chomp.to_sym
   # while the name is not empty, repeat this code
   i = 0
@@ -33,9 +34,9 @@ def input_students
     end
     # get another name from the user
     puts "Enter name: "
-    name = gets.chomp.to_sym
+    name = gets.chop.to_sym
     if !name.empty?
-      puts "Enter height: "
+      puts "Enter height in cm: "
       height = gets.chomp.to_sym
       puts "Enter cohort: "
       cohort = gets.chomp.to_sym
@@ -52,17 +53,47 @@ def print_header
 end
 
 def print(students)
-#  cohorts = []
-#  students[:cohort].map do |cohort|
-#    cohorts.push(cohort)
-#  end 
-#  puts cohorts
-
-  i = 0
-  while i < students.size do
-    puts "#{students[i][:name]}, #{students[i][:height]}cm, (#{students[i][:cohort]} cohort)".center(40)
-    i += 1
+  october = []
+  november = []
+  december = []
+  students.each do |student|
+    if student[:cohort] == :October
+      october.push(student)
+    elsif student[:cohort] == :November
+      november.push(student)
+    elsif student[:cohort] == :December
+      december.push(student)
+    end
   end
+
+  if !october.empty?
+    puts "October students:"
+    october.each do |student|
+      puts "#{student[:name]}, #{student[:height]}cm"
+    end
+  end
+
+  if !november.empty?
+    puts "November students:"
+    november.each do |student|
+      puts "#{student[:name]}, #{student[:height]}cm"
+    end
+  end
+
+  if !december.empty?
+    puts "December students:"
+    december.each do |student|
+      puts "#{student[:name]}, #{student[:height]}cm"
+    end
+  end
+
+
+# no longer needed (while loop for printing all students)
+#  i = 0
+#  while i < students.size do
+#    puts "#{students[i][:name]}, #{students[i][:height]}cm, (#{students[i][:cohort]} cohort)".center(40)
+#    i += 1
+#  end
 end
 
 def print_footer(students)
@@ -70,6 +101,8 @@ def print_footer(students)
 end
 
 students = input_students
-print_header
-print(students)
-print_footer(students)
+if !students.empty?
+  print_header
+  print(students)
+  print_footer(students)
+end
