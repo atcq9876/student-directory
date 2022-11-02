@@ -34,25 +34,13 @@ def input_students
   puts "To finish, just hit return twice"
   # get the first name
   puts "Enter name: "
-  name = gets.chomp
+  name = gets.chomp.to_sym
   puts "Enter cohort: "
   cohort = gets.chomp.to_sym
   # while the name is not empty, repeat this code
-  i = 0
   while !name.empty? do
     # add the student hash to the array
     @students << {name: name, cohort: cohort}
-    if cohort.empty?
-      @students[i][:cohort] = :November
-    end
-    puts "Did you misspell the name? Yes/no"
-    typo = gets.chomp.downcase
-    if typo == "yes"
-      puts "Please retype the name: "
-      @students[i][:name] = gets.chomp.to_sym
-    else
-      @students[i][:name] = @students[i][:name].to_sym
-    end
     if @students.count == 1
       puts "Now we have #{@students.count} student"
     else
@@ -60,12 +48,11 @@ def input_students
     end
     # get another name from the user
     puts "Enter name: "
-    name = gets.chomp
+    name = gets.chomp.to_sym
     if !name.empty?
       puts "Enter cohort: "
       cohort = gets.chomp.to_sym
     end
-    i += 1
   end
 end
 
@@ -85,38 +72,8 @@ def print_header
 end
 
 def print_students_list
-  october = []
-  november = []
-  december = []
   @students.each do |student|
-    if student[:cohort] == :October
-      october.push(student)
-    elsif student[:cohort] == :November
-      november.push(student)
-    elsif student[:cohort] == :December
-      december.push(student)
-    end
-  end
-
-  if !october.empty?
-    puts "October students:"
-    october.each do |student|
-      puts "#{student[:name]}"
-    end
-  end
-
-  if !november.empty?
-    puts "November students:"
-    november.each do |student|
-      puts "#{student[:name]}"
-    end
-  end
-
-  if !december.empty?
-    puts "December students:"
-    december.each do |student|
-      puts "#{student[:name]}"
-    end
+    puts "#{student[:name]} (#{student[:cohort]} cohort)"
   end
 end
 
