@@ -35,15 +35,13 @@ def input_students
   # get the first name
   puts "Enter name: "
   name = gets.chomp
-  puts "Enter height in cm: "
-  height = gets.chomp.to_sym
   puts "Enter cohort: "
   cohort = gets.chomp.to_sym
   # while the name is not empty, repeat this code
   i = 0
   while !name.empty? do
     # add the student hash to the array
-    @students << {name: name, height: height, cohort: cohort}
+    @students << {name: name, cohort: cohort}
     if cohort.empty?
       @students[i][:cohort] = :November
     end
@@ -64,8 +62,6 @@ def input_students
     puts "Enter name: "
     name = gets.chomp
     if !name.empty?
-      puts "Enter height in cm: "
-      height = gets.chomp.to_sym
       puts "Enter cohort: "
       cohort = gets.chomp.to_sym
     end
@@ -105,21 +101,21 @@ def print_students_list
   if !october.empty?
     puts "October students:"
     october.each do |student|
-      puts "#{student[:name]}, #{student[:height]}cm"
+      puts "#{student[:name]}"
     end
   end
 
   if !november.empty?
     puts "November students:"
     november.each do |student|
-      puts "#{student[:name]}, #{student[:height]}cm"
+      puts "#{student[:name]}"
     end
   end
 
   if !december.empty?
     puts "December students:"
     december.each do |student|
-      puts "#{student[:name]}, #{student[:height]}cm"
+      puts "#{student[:name]}"
     end
   end
 end
