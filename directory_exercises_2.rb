@@ -1,3 +1,5 @@
+require 'csv'
+
 @students = [] # an empty array accessible to all methods
 
 def interactive_menu
@@ -88,12 +90,9 @@ end
 
 def load_students_from_file
   puts "Which file would you like to load students from?"
-  filename = gets.chomp
-  open(filename, "r") do |file|
-    file.readlines.each do |line|
-      name, cohort = line.chomp.split(',')
-      add_student_to_array(name, cohort)
-    end
+  CSV.foreach(gets.chomp) do |line| 
+    name, cohort = line
+    add_student_to_array(name, cohort)
   end
 end
 
