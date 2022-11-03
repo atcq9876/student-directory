@@ -77,9 +77,8 @@ end
 def save_students_to_file
   # open the file for writing
   puts "Which file would you like to save to?"
-  filename = gets.chomp
   # iterate over the array of students
-  open(filename, "a") do |file|
+  open(gets.chomp, "a") do |file|
     @students.each do |student|
       student_data = [student[:name], student[:cohort]]
       csv_line = student_data.join(",")
